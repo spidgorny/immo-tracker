@@ -3,6 +3,7 @@ import mysql from "mysql2/promise";
 // @ts-ignore
 import fs from "fs";
 import { MysqlConnector } from "./mysql-connector.ts";
+import {dbCertificate} from "./db-certificate.ts";
 
 let db: Record<string, MysqlConnector> = {};
 export async function getDB(dbName = null): Promise<MysqlConnector> {
@@ -23,7 +24,8 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
 		port: Number(process.env.DOCEAN_port),
 		ssl: {
 			// ca: fs.readFileSync("./cacert.pem"),
-			ca: fs.readFileSync("./data/ca-certificate.crt").toString(),
+			// ca: fs.readFileSync("./data/ca-certificate.crt").toString(),
+			ca: dbCertificate
 		},
 	});
 
