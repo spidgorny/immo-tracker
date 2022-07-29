@@ -21,7 +21,7 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
 		user: process.env.DOCEAN_USERNAME,
 		password: process.env.DOCEAN_PASSWORD,
 		database: process.env.DOCEAN_DATABASE,
-		port: Number(process.env.DOCEAN_port),
+		port: Number(process.env.DOCEAN_PORT),
 		ssl: {
 			// ca: fs.readFileSync("./cacert.pem"),
 			// ca: fs.readFileSync("./data/ca-certificate.crt").toString(),
