@@ -4,6 +4,7 @@ import {getDB} from "../../../lib/mysql/mysql.ts";
 
 export default async function handler(req, res) {
 	const db = await getDB('immo_tracker');
+	console.log('db', 'yes')
 	const tProps = db.getTable('props')
 	const results = await tProps.select({})
 	res.status(200).json({
