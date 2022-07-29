@@ -20,7 +20,7 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
 		host: process.env.DOCEAN_HOST,
 		user: process.env.DOCEAN_USERNAME,
 		password: process.env.DOCEAN_PASSWORD,
-		database: process.env.DOCEAN_DATABASE,
+		database: dbName ?? process.env.DOCEAN_DATABASE,
 		port: Number(process.env.DOCEAN_PORT),
 		ssl: {
 			// ca: fs.readFileSync("./cacert.pem"),
