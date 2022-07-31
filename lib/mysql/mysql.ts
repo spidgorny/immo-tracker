@@ -16,7 +16,7 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
     throw new Error(".env file missing");
   }
 
-  const conn = mysql.createPool({
+  let config = {
     host: process.env.DOCEAN_HOST,
     user: process.env.DOCEAN_USERNAME,
     password: process.env.DOCEAN_PASSWORD,
@@ -27,7 +27,8 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
       // ca: fs.readFileSync("./data/ca-certificate.crt").toString(),
       ca: dbCertificate,
     },
-  });
+  };
+  const conn = mysql.createPool(config);
 
   db[dbName] = new MysqlConnector(conn);
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
