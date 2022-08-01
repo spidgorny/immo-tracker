@@ -18,7 +18,13 @@ export function PropComments({ prop }) {
   return (
     <div>
       <p>Comments [{comments.length}]:</p>
-      <CommentForm prop={prop} mutateComments={mutateComments} />
+      <HStack
+        className="justify-content-between flex-grow align-items-stretch"
+        gap={3}
+      >
+        <CommentForm prop={prop} mutateComments={mutateComments} />
+        <UploadForm prop={prop} mutateComments={mutateComments} />
+      </HStack>
       {comments.map((x) => (
         <CommentRow key={x.id} comment={x} />
       ))}
@@ -62,7 +68,7 @@ export function CommentForm({ prop, mutateComments }) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="w-50">
       <div className="input-group my-3">
         <input name="user" placeholder="User" className="form-control" />
       </div>
@@ -75,6 +81,68 @@ export function CommentForm({ prop, mutateComments }) {
       </div>
       <div className="input-group my-3">
         <button type="submit">Save Comment</button>
+      </div>
+    </form>
+  );
+}
+
+export async function readBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+
+    reader.onload = function (event) {
+      // Convert file to Base64 string
+      // btoa is built int javascript function for base64 encoding
+      resolve(btoa(event.target.result));
+    };
+  });
+}
+
+export function UploadForm({ prop, mutateComments }) {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log(formData);
+    let file = formData.get("file");
+    console.log(file);
+    let arrayBuffer = await file.arrayBuffer();
+    // const blob = new Blob([arrayBuffer], { type: file.type });
+    // console.log(blob);
+
+    const base64 = await readBase64(file);
+    console.log(base64);
+
+    const { data } = await axios.post(
+      `/api/properties/${prop.id}/upload-file`,
+      {
+        id_prop: prop.id,
+        file_name: file.name,
+        file_type: file.type,
+        file: base64,
+      }
+    );
+    // console.log(data);
+    await mutateComments();
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="w-50">
+      <div className="input-group my-3">
+        <input name="user" placeholder="User" className="form-control" />
+      </div>
+
+      <div className="input-group my-3">
+        <input
+          type="file"
+          name="file"
+          placeholder="File"
+          className="form-control"
+        />
+      </div>
+
+      <div className="input-group my-3">
+        <button type="submit">Upload</button>
       </div>
     </form>
   );
