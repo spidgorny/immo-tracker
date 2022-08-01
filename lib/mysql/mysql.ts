@@ -22,12 +22,18 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
     password: process.env.DOCEAN_PASSWORD,
     database: dbName ?? process.env.DOCEAN_DATABASE,
     port: Number(process.env.DOCEAN_PORT),
-    ssl: {
-      // ca: fs.readFileSync("./cacert.pem"),
-      // ca: fs.readFileSync("./data/ca-certificate.crt").toString(),
-      ca: dbCertificate,
-    },
   };
+  if (process.env.DOCEAN_SSLMODE) {
+    config = {
+      ...config,
+      // @ts-ignore
+      ssl: {
+        // ca: fs.readFileSync("./cacert.pem"),
+        // ca: fs.readFileSync("./data/ca-certificate.crt").toString(),
+        ca: dbCertificate,
+      },
+    };
+  }
   const conn = mysql.createPool(config);
 
   db[dbName] = new MysqlConnector(conn);

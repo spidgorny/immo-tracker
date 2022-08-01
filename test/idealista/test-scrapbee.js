@@ -1,19 +1,20 @@
 import scrapingbee from "scrapingbee";
+import { runTest } from "../bootstrap.js";
+
+runTest(async () => {
+  const url = "https://www.idealista.com/en/inmueble/96279217/";
+
+  const response = await get(url);
+  const decoder = new TextDecoder();
+  const text = decoder.decode(response.data);
+  console.log(text);
+});
 
 async function get(url) {
-  var client = new scrapingbee.ScrapingBeeClient("");
-  var response = await client.get({
+  const client = new scrapingbee.ScrapingBeeClient(process.env.SCRAPBEE);
+  const response = await client.get({
     url: url,
     params: {},
   });
   return response;
 }
-const url = "https://www.idealista.com/en/inmueble/96279217/";
-
-get(url)
-  .then(function (response) {
-    var decoder = new TextDecoder();
-    var text = decoder.decode(response.data);
-    console.log(text);
-  })
-  .catch((e) => console.log("A problem occurs : " + e.response.data));

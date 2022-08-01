@@ -6,6 +6,7 @@ export async function loadEnv() {
   let envPath = await findUp(".env");
   // console.log((chalk.cyan("Env Path => ")), envPath);
   dotenv.config({ path: envPath });
+  console.log("HTTP_PROXY", process.env.HTTP_PROXY);
   // if (!process.env.MYSQL_HOST) {
   // 	throw new Error(".env not loaded");
   // }
@@ -22,6 +23,9 @@ export async function runTest(code) {
     if (e?.response?.data) {
       console.error("ERROR", e.status, e.statusText);
       console.error("ERROR", e.response.data);
+      if (e.response.data instanceof Buffer) {
+        console.error(e.response.data.toString());
+      }
     } else {
       console.error("ERROR", e);
     }

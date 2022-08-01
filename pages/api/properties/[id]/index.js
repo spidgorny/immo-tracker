@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { getDB } from "../../../lib/mysql/mysql.ts";
+import { getDB } from "../../../../lib/mysql/mysql.ts";
 import invariant from "tiny-invariant";
 
 export default async function handler(req, res) {

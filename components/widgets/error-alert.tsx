@@ -19,7 +19,7 @@ export function ErrorDanger({
   );
 }
 
-export default function ErrorAlert({ error, className, children, debug }) {
+export function ErrorAlert({ error, className, children, debug }) {
   return error || children ? (
     <div className={"alert alert-warning " + className}>
       <div className="fw-bold">
