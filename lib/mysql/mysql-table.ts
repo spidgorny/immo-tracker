@@ -48,8 +48,13 @@ export class MysqlTable {
     return { ...res, query: query.query, values: query.values };
   }
 
-  async insertUpdate(data: any, updatePlus = {}) {
-    const query = getInsertUpdateQuery(this.TABLE, data, updatePlus);
+  async insertUpdate(data: any, updatePlus = {}, insertPlus = {}) {
+    const query = getInsertUpdateQuery(
+      this.TABLE,
+      data,
+      updatePlus,
+      insertPlus
+    );
     // console.log(query.query, query.values);
     const res = await this.db.query(query.query, query.values);
     return { ...res, query: query.query, values: query.values };

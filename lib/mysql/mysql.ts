@@ -7,6 +7,7 @@ import { dbCertificate } from "./db-certificate";
 
 let db: Record<string, MysqlConnector> = {};
 export async function getDB(dbName = null): Promise<MysqlConnector> {
+  dbName = dbName ?? process.env.DOCEAN_DATABASE;
   if (db[dbName]) {
     return db[dbName];
   }
@@ -20,7 +21,7 @@ export async function getDB(dbName = null): Promise<MysqlConnector> {
     host: process.env.DOCEAN_HOST,
     user: process.env.DOCEAN_USERNAME,
     password: process.env.DOCEAN_PASSWORD,
-    database: dbName ?? process.env.DOCEAN_DATABASE,
+    database: process.env.DOCEAN_DATABASE,
     port: Number(process.env.DOCEAN_PORT),
   };
   if (process.env.DOCEAN_SSLMODE) {

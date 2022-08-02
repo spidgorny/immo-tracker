@@ -1,5 +1,8 @@
 import dotenv from "dotenv";
 import { findUp } from "find-up";
+import axios from "axios";
+
+const { AxiosError } = axios;
 
 export async function loadEnv() {
   // console.log(process.cwd());
@@ -20,7 +23,7 @@ export async function runTest(code) {
     console.log("Done in", process.uptime());
     process.exit(0);
   } catch (e) {
-    if (e?.response?.data) {
+    if (e instanceof AxiosError) {
       console.error("ERROR", e.status, e.statusText);
       console.error("ERROR", e.response.data);
       if (e.response.data instanceof Buffer) {
@@ -29,6 +32,7 @@ export async function runTest(code) {
     } else {
       console.error("ERROR", e);
     }
+    console.log("Uptime", process.uptime());
   }
 }
 
