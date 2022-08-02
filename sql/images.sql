@@ -1,4 +1,4 @@
-create table immo_tracker.images
+create table immo_tracker.prop_images
 (
     id         int primary key auto_increment,
     id_prop    int          null,

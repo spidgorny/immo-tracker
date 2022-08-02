@@ -1,6 +1,7 @@
 import { runTest } from "../bootstrap.js";
 import { getDB } from "../../lib/mysql/mysql";
 import { importImagesFor } from "../../lib/prop/images";
+import { sleep } from "../../lib/common/date.mjs";
 
 runTest(async () => {
   // const url = "https://www.idealista.com/en/inmueble/96279217/";
@@ -12,5 +13,8 @@ runTest(async () => {
   // await importImagesFor(propRow);
 
   const propRows = await tProps.select({ url: { $like: "%idealista%" } });
-  await Promise.all(propRows.map(importImagesFor));
+  for (let propRow of propRows) {
+    await importImagesFor(propRow);
+    await sleep(2);
+  }
 });

@@ -11,6 +11,8 @@ export function PropComments({ prop }) {
     fetcher
   );
 
+  console.log(comments);
+
   if (comments === undefined) {
     return <Spinner animation="border" />;
   }

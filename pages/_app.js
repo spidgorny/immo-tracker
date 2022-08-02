@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="py-3">
+      <div className="my-2">
         <Component {...pageProps} />
       </div>
 

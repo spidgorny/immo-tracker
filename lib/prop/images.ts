@@ -9,7 +9,7 @@ export async function importImagesFor(propRow) {
   const images = await fetchImagesFor(propRow.url);
 
   const db = await getDB();
-  const tImages = db.getTable("images");
+  const tImages = db.getTable("prop_images");
   const dbRes = await Promise.all(
     images.map((img: any, nr) =>
       tImages.insertUpdate(
@@ -27,7 +27,7 @@ export async function importImagesFor(propRow) {
       )
     )
   );
-  console.table(dbRes);
+  console.table(dbRes, ["insertId", "affectedRows"]);
 }
 
 export async function fetchImagesFor(url) {
