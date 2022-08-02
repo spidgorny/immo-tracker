@@ -46,7 +46,12 @@ export function CommentRow({ comment }) {
         <pre>
           {comment.message} {comment.tag && <Badge>{comment.tag}</Badge>}
           {comment.file_url && (
-            <a href={comment.file_url} target="_blank">
+            <a
+              href={comment.file_url}
+              target="_blank"
+              rel="noreferrer"
+              alt="Image"
+            >
               <Image src={comment.file_url} width={128} height={128} />
             </a>
           )}
