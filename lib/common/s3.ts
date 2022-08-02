@@ -27,11 +27,11 @@ export async function uploadBufferToS3(
     });
   }
 
-  invariant(process.env.YOURACCESSKEYID, "fix .env");
+  invariant(process.env.AWS_API_KEY, "fix .env");
 
   const s3 = new AWS.S3({
-    accessKeyId: process.env.YOURACCESSKEYID,
-    secretAccessKey: process.env.SECRETACCESSKEY,
+    accessKeyId: process.env.AWS_API_KEY,
+    secretAccessKey: process.env.AWS_API_SECRET,
     region: process.env.REGION,
   });
 
@@ -60,11 +60,11 @@ export async function uploadFileToS3(task) {
     });
   }
 
-  invariant(process.env.YOURACCESSKEYID, "fix .env");
+  invariant(process.env.AWS_API_KEY, "fix .env");
 
   const s3 = new AWS.S3({
-    accessKeyId: process.env.YOURACCESSKEYID,
-    secretAccessKey: process.env.SECRETACCESSKEY,
+    accessKeyId: process.env.AWS_API_KEY,
+    secretAccessKey: process.env.AWS_API_SECRET,
     region: process.env.REGION,
   });
 
@@ -93,12 +93,12 @@ export async function uploadLargeFileToS3(fileName: string) {
     });
   }
 
-  invariant(process.env.YOURACCESSKEYID, "fix .env");
+  invariant(process.env.AWS_API_KEY, "fix .env");
   invariant(process.env.REGION, "fix .env");
 
   const s3 = new AWS.S3({
-    accessKeyId: process.env.YOURACCESSKEYID,
-    secretAccessKey: process.env.SECRETACCESSKEY,
+    accessKeyId: process.env.AWS_API_KEY,
+    secretAccessKey: process.env.AWS_API_SECRET,
     region: process.env.REGION,
     apiVersion: "2006-03-01",
     signatureVersion: "v4",

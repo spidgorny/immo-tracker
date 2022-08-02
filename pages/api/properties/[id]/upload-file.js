@@ -19,7 +19,9 @@ export default async function handler(req, res) {
   const tProps = db.getTable("prop_comments");
   const result = await tProps.insert({
     id_prop,
-    ...formData,
+    file_name,
+    file_type,
+    file_url: uploadResult.Location,
     created_at: getNowForSQL(),
     updated_at: getNowForSQL(),
   });

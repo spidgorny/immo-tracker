@@ -22,7 +22,7 @@ export default function OneProp() {
       )}
       {prop && (
         <div>
-          <HStack>
+          <HStack gap={3}>
             <div>
               {prop.images[0] && (
                 <Image src={prop.images[0].src} width={512} height={512} />

@@ -4,9 +4,17 @@ import mysql from "mysql2/promise";
 import fs from "fs";
 import { MysqlConnector } from "./mysql-connector";
 import { dbCertificate } from "./db-certificate";
+import { registerService } from "./global-service.mjs";
 
 let db: Record<string, MysqlConnector> = {};
+
 export async function getDB(dbName = null): Promise<MysqlConnector> {
+  return registerService("db", () => {
+    return getDBdirect(dbName);
+  });
+}
+
+export async function getDBdirect(dbName = null): Promise<MysqlConnector> {
   dbName = dbName ?? process.env.DOCEAN_DATABASE;
   if (db[dbName]) {
     return db[dbName];
