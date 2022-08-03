@@ -7,7 +7,7 @@ import { uploadBufferToS3, uploadFileToS3 } from "../../../../lib/common/s3";
 
 export default async function handler(req, res) {
   invariant(req.method === "POST", "only POST");
-  console.log(req.body);
+  // console.log(req.body);
   const { id_prop, file_name, file_type, file } = req.body;
   invariant(id_prop, "id_prop");
 
@@ -19,7 +19,9 @@ export default async function handler(req, res) {
   const tProps = db.getTable("prop_comments");
   const result = await tProps.insert({
     id_prop,
-    ...formData,
+    file_name,
+    file_type,
+    file_url: uploadResult.Location,
     created_at: getNowForSQL(),
     updated_at: getNowForSQL(),
   });

@@ -8,6 +8,13 @@ export default async function handler(req, res) {
   invariant(id, "id");
   const db = await getDB("immo_tracker");
   const tProps = db.getTable("props");
-  const results = await tProps.selectOne({ id });
-  res.status(200).json(results);
+  const tImages = db.getTable("prop_images");
+  const propRow = await tProps.selectOne({ id });
+  propRow.images = await tImages.select(
+    { id_prop: propRow.id },
+    {
+      sort: "nr",
+    }
+  );
+  res.status(200).json(propRow);
 }

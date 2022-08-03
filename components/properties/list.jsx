@@ -6,12 +6,13 @@ import { niceMoney } from "../../lib/common/number.ts";
 import { useEffect, useState } from "react";
 import { HStack } from "../widgets/hstack.tsx";
 import Link from "next/link";
+import Image from "next/image";
 
 export function PropertiesList() {
   const { data, error } = useSWR("/api/properties/list", fetcher);
 
   return (
-    <div className="my-5">
+    <div className="my-2">
       <ErrorAlert error={error} />
       {!data && <Spinner animation="border" />}
       <PropTransformer props={data?.results}>
@@ -35,7 +36,7 @@ export function PropTransformer({ props, children }) {
 
   return (
     <div>
-      <HStack className="justify-content-start bg-gray-100 p-2">
+      <HStack className="justify-content-start bg-gray-100 p-2" gap={3}>
         <div>Sort by:</div>
         <div onClick={() => setSortBy("price")}>price</div>
         <div onClick={() => setSortBy("area")}>area</div>
@@ -43,7 +44,7 @@ export function PropTransformer({ props, children }) {
           price/m<sup>2</sup>
         </div>
       </HStack>
-      <div className="my-1 d-flex flex-column flex-column flex-sm-row flex-wrap gap-2">
+      <div className="my-1 d-flex flex-column flex-sm-row flex-wrap gap-2">
         {children(props)}
       </div>
     </div>
@@ -73,25 +74,54 @@ export function OneProp({ prop }) {
     >
       <Card className="">
         <Card.Body className="">
-          <h6 className="p-0 m-0">
-            <Link href={`/prop/${prop.id}`} passHref>
-              <a className="stretched-link text-black text-decoration-none">
-                {prop.name} x{window.innerWidth}
+          <HStack gap={3}>
+            <div className="flex-shrink-0" style={{ width: 64 }}>
+              {prop.images[0]?.src && (
+                <Image
+                  src={prop.images[0].src}
+                  width={64}
+                  height={64}
+                  alt="image"
+                />
+              )}
+            </div>
+            <h6 className="p-0 m-0">
+              <Link href={`/prop/${prop.id}`} passHref>
+                <a className="stretched-link text-black text-decoration-none">
+                  {prop.name} x{window.innerWidth}
+                </a>
+              </Link>
+            </h6>
+            <div className="text-muted fs-4">
+              <a href={prop.url} className="text-muted fs-6 text-truncate ">
+                {prop.url}
               </a>
-            </Link>
-          </h6>
-          <div className="text-muted fs-4">
-            <a href={prop.url} className="text-muted fs-6 text-truncate ">
-              {prop.url}
-            </a>
-          </div>
-          <HStack className="justify-content-between font-monospace">
-            <div>{niceMoney(prop.price)}</div>
-            <div>
-              {prop.area} m<sup>2</sup>
             </div>
             <div>
-              {(prop.price / prop.area).toFixed(2)} / m<sup>2</sup>
+              <h6 className="p-0 m-0">
+                <Link href={`/prop/${prop.id}`} passHref>
+                  <a className="stretched-link text-black text-decoration-none">
+                    {prop.name}
+                  </a>
+                </Link>
+              </h6>
+              {/*<div className="text-muted fs-4">*/}
+              {/*<a href={prop.url} className="text-muted fs-6 text-truncate ">*/}
+              {/*  {prop.url}*/}
+              {/*</a>*/}
+              {/*</div>*/}
+              <HStack
+                className="justify-content-between font-monospace"
+                style={{ fontSize: "10pt" }}
+              >
+                <div>{niceMoney(prop.price)}</div>
+                <div>
+                  {prop.area} m<sup>2</sup>
+                </div>
+                <div>
+                  {(prop.price / prop.area).toFixed(2)} / m<sup>2</sup>
+                </div>
+              </HStack>
             </div>
           </HStack>
         </Card.Body>

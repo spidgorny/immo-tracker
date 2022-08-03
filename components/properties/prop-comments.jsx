@@ -1,15 +1,18 @@
 import useSWR from "swr";
 import { fetcher } from "../../lib/common/http";
-import { Col, Row, Spinner } from "react-bootstrap";
+import { Badge, Col, Row, Spinner } from "react-bootstrap";
 import { getFormData } from "../../lib/common/form";
 import axios from "axios";
 import { HStack } from "../widgets/hstack";
+import Image from "next/image";
 
 export function PropComments({ prop }) {
   const { data: comments, mutate: mutateComments } = useSWR(
     `/api/properties/${prop.id}/comments`,
     fetcher
   );
+
+  console.log(comments);
 
   if (comments === undefined) {
     return <Spinner animation="border" />;
@@ -42,7 +45,17 @@ export function CommentRow({ comment }) {
           <div>{comment.created_at}</div>
         </HStack>
         <pre>
-          {comment.message} {comment.tag} {comment.image}
+          {comment.message} {comment.tag && <Badge>{comment.tag}</Badge>}
+          {comment.file_url && (
+            <a
+              href={comment.file_url}
+              target="_blank"
+              rel="noreferrer"
+              alt="Image"
+            >
+              <Image src={comment.file_url} width={128} height={128} />
+            </a>
+          )}
         </pre>
       </Col>
     </Row>
