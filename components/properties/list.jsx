@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { ErrorAlert } from "../widgets/error-alert.tsx";
 import { Card, Spinner } from "react-bootstrap";
 import { niceMoney } from "../../lib/common/number.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HStack } from "../widgets/hstack.tsx";
 import Link from "next/link";
 
@@ -17,8 +17,6 @@ export function PropertiesList() {
       <PropTransformer props={data?.results}>
         {(data) => data?.map((prop) => <OneProp key={prop.id} prop={prop} />)}
       </PropTransformer>
-      <hr />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }
@@ -45,7 +43,7 @@ export function PropTransformer({ props, children }) {
           price/m<sup>2</sup>
         </div>
       </HStack>
-      <div className="my-1 d-flex flex-row flex-wrap gap-2">
+      <div className="my-1 d-flex flex-column flex-column flex-sm-row flex-wrap gap-2">
         {children(props)}
       </div>
     </div>
@@ -53,17 +51,32 @@ export function PropTransformer({ props, children }) {
 }
 
 export function OneProp({ prop }) {
+  const getFlexBasis = () =>
+    window.innerWidth < xs ? "100%" : window.innerWidth < sm ? "49%" : "32%";
+
+  const [flexBasis, setFlexBasis] = useState(getFlexBasis());
+  const xs = 576;
+  const sm = 768;
+  const md = 992;
+  const lg = 1200;
+  const xl = 1400;
+  const xxl = 99999;
+
+  useEffect(() => {
+    setFlexBasis(getFlexBasis());
+  }, [window.innerWidth]);
+
   return (
     <div
       className="overflow-hidden flex-grow-0 flex-shrink-1"
-      style={{ flexBasis: "32%" }}
+      style={{ flexBasis }}
     >
       <Card className="">
         <Card.Body className="">
           <h6 className="p-0 m-0">
             <Link href={`/prop/${prop.id}`} passHref>
               <a className="stretched-link text-black text-decoration-none">
-                {prop.name}
+                {prop.name} x{window.innerWidth}
               </a>
             </Link>
           </h6>

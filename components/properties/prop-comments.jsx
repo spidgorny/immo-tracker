@@ -16,10 +16,11 @@ export function PropComments({ prop }) {
   }
 
   return (
-    <div>
+    <div className="my-3">
       <p>Comments [{comments.length}]:</p>
       <HStack
-        className="justify-content-between flex-grow align-items-stretch"
+        className="justify-content-between flex-grow align-items-stretch
+        flex-column flex-sm-row"
         gap={3}
       >
         <CommentForm prop={prop} mutateComments={mutateComments} />
@@ -68,7 +69,7 @@ export function CommentForm({ prop, mutateComments }) {
   };
 
   return (
-    <form onSubmit={onSubmit} className="w-50">
+    <form onSubmit={onSubmit} className="w-100">
       <div className="input-group my-3">
         <input name="user" placeholder="User" className="form-control" />
       </div>
@@ -127,7 +128,7 @@ export function UploadForm({ prop, mutateComments }) {
   };
 
   return (
-    <form onSubmit={onSubmit} className="w-50">
+    <form onSubmit={onSubmit} className="w-100">
       <div className="input-group my-3">
         <input name="user" placeholder="User" className="form-control" />
       </div>

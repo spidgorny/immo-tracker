@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { Spinner } from "react-bootstrap";
 import { PropCard } from "../../components/properties/one-prop.jsx";
 import { PropComments } from "../../components/properties/prop-comments.jsx";
+import { PropImages } from "../../components/properties/prop-images.jsx";
 
 export default function OneProp() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function OneProp() {
       {prop && (
         <div>
           <PropCard prop={prop} />
+          <PropImages prop={prop} />
           <PropComments prop={prop} />
         </div>
       )}
