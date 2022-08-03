@@ -13,7 +13,6 @@ export function PropImages({ prop }) {
       }
     },
   });
-  console.log(handle);
   const [currentImage, setCurrentImage] = useState();
 
   return (
@@ -35,33 +34,35 @@ export function PropImages({ prop }) {
         ))}
       </div>
 
-      <FullScreen handle={handle} className="bg-white">
-        <div className="slide-container">
-          <Slide
-            transitionDuration={300}
-            defaultIndex={images.findIndex((x) => x.id === currentImage.id)}
-          >
-            {images.map((img) => (
-              <div className="each-slide" key={img.id}>
-                <div style={{ backgroundImage: `url(${img.src})` }}>
-                  <span>Img</span>
+      {currentImage && handle.active && (
+        <FullScreen handle={handle} className="bg-white">
+          <div className="slide-container">
+            <Slide
+              transitionDuration={300}
+              defaultIndex={images.findIndex((x) => x.id === currentImage?.id)}
+            >
+              {images.map((img) => (
+                <div className="each-slide" key={img.id}>
+                  <div style={{ backgroundImage: `url(${img.src})` }}>
+                    <span>Img</span>
+                  </div>
+                  {/*<Image*/}
+                  {/*  src={img.src}*/}
+                  {/*  alt={img.caption}*/}
+                  {/*  width={"100%"}*/}
+                  {/*  height={"100%"}*/}
+                  {/*  layout="fill"*/}
+                  {/*  onClick={async () => {*/}
+                  {/*    setCurrentImage(null);*/}
+                  {/*    await handle.exit();*/}
+                  {/*  }}*/}
+                  {/*/>*/}
                 </div>
-                {/*<Image*/}
-                {/*  src={img.src}*/}
-                {/*  alt={img.caption}*/}
-                {/*  width={"100%"}*/}
-                {/*  height={"100%"}*/}
-                {/*  layout="fill"*/}
-                {/*  onClick={async () => {*/}
-                {/*    setCurrentImage(null);*/}
-                {/*    await handle.exit();*/}
-                {/*  }}*/}
-                {/*/>*/}
-              </div>
-            ))}
-          </Slide>
-        </div>
-      </FullScreen>
+              ))}
+            </Slide>
+          </div>
+        </FullScreen>
+      )}
     </>
   );
 }
