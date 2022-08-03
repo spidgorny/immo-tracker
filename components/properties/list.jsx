@@ -74,7 +74,7 @@ export function OneProp({ prop }) {
     >
       <Card className="">
         <Card.Body className="">
-          <HStack gap={3}>
+          <HStack gap={3} className="align-items-start">
             <div className="flex-shrink-0" style={{ width: 64 }}>
               {prop.images[0]?.src && (
                 <Image
@@ -84,18 +84,6 @@ export function OneProp({ prop }) {
                   alt="image"
                 />
               )}
-            </div>
-            <h6 className="p-0 m-0">
-              <Link href={`/prop/${prop.id}`} passHref>
-                <a className="stretched-link text-black text-decoration-none">
-                  {prop.name} x{window.innerWidth}
-                </a>
-              </Link>
-            </h6>
-            <div className="text-muted fs-4">
-              <a href={prop.url} className="text-muted fs-6 text-truncate ">
-                {prop.url}
-              </a>
             </div>
             <div>
               <h6 className="p-0 m-0">

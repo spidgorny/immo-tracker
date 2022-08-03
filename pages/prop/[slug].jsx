@@ -23,16 +23,20 @@ export default function OneProp() {
       )}
       {prop && (
         <div>
-          <PropCard prop={prop} />
-          <PropImages prop={prop} />
-          <HStack gap={3}>
+          <HStack gap={3} className="align-items-start">
             <div>
               {prop.images[0] && (
-                <Image src={prop.images[0].src} width={512} height={512} />
+                <Image
+                  src={prop.images[0].src}
+                  width={512}
+                  height={512}
+                  alt="Bigger image"
+                />
               )}
             </div>
             <PropCard prop={prop} />
           </HStack>
+          <PropImages prop={prop} />
           <PropComments prop={prop} />
         </div>
       )}
