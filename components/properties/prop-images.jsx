@@ -1,8 +1,22 @@
 import Image from "next/image";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useState } from "react";
-import "react-slideshow-image/dist/styles.css";
-import { Slide } from "react-slideshow-image";
+import ImageGallery from "react-image-gallery";
+
+const images = [
+  {
+    original: "https://picsum.photos/id/1018/1000/600/",
+    thumbnail: "https://picsum.photos/id/1018/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1015/1000/600/",
+    thumbnail: "https://picsum.photos/id/1015/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1019/1000/600/",
+    thumbnail: "https://picsum.photos/id/1019/250/150/",
+  },
+];
 
 export function PropImages({ prop }) {
   const images = prop.images;
@@ -15,6 +29,8 @@ export function PropImages({ prop }) {
   });
   const [currentImage, setCurrentImage] = useState();
 
+  console.log(handle);
+
   return (
     <>
       <div className="d-flex flex-row flex-nowrap gap-2 my-3 overflow-auto">
@@ -26,6 +42,7 @@ export function PropImages({ prop }) {
               width={128}
               height={128}
               onClick={async () => {
+                console.log(image);
                 setCurrentImage(image);
                 await handle.enter();
               }}
@@ -34,35 +51,10 @@ export function PropImages({ prop }) {
         ))}
       </div>
 
-      {currentImage && handle.active && (
-        <FullScreen handle={handle} className="bg-white">
-          <div className="slide-container">
-            <Slide
-              transitionDuration={300}
-              defaultIndex={images.findIndex((x) => x.id === currentImage?.id)}
-            >
-              {images.map((img) => (
-                <div className="each-slide" key={img.id}>
-                  <div style={{ backgroundImage: `url(${img.src})` }}>
-                    <span>Img</span>
-                  </div>
-                  {/*<Image*/}
-                  {/*  src={img.src}*/}
-                  {/*  alt={img.caption}*/}
-                  {/*  width={"100%"}*/}
-                  {/*  height={"100%"}*/}
-                  {/*  layout="fill"*/}
-                  {/*  onClick={async () => {*/}
-                  {/*    setCurrentImage(null);*/}
-                  {/*    await handle.exit();*/}
-                  {/*  }}*/}
-                  {/*/>*/}
-                </div>
-              ))}
-            </Slide>
-          </div>
-        </FullScreen>
-      )}
+      {currentImage && <ImageGallery items={images} />}
     </>
   );
 }
+
+// <FullScreen handle={handle} className="bg-gray-100 vh-100">
+//        </FullScreen>

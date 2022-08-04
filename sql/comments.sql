@@ -3,7 +3,7 @@ create table immo_tracker.prop_comments
     id         int primary key auto_increment,
     id_prop    int          null,
     user       varchar(255) null,
-    message    varchar(255) null,
+    message    longtext null,
     tag        varchar(255) null,
     file_name  varchar(255) null,
     file_type  varchar(255) null,

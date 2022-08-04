@@ -1,4 +1,4 @@
-import { runTest } from "../bootstrap.js";
+import { runTest } from "../bootstrap.ts";
 import axios from "axios";
 import fs from "fs";
 import stringHash from "string-hash";
