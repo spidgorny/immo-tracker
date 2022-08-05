@@ -8,6 +8,7 @@ import { PropImages } from "../../components/properties/prop-images.jsx";
 import Image from "next/image.js";
 import { HStack } from "../../components/widgets/hstack.tsx";
 import { Center } from "../../components/widgets/center.js";
+import { RiExternalLinkLine } from "react-icons/ri";
 
 export default function OneProp() {
   const router = useRouter();
@@ -26,7 +27,11 @@ export default function OneProp() {
           <HStack gap={3} className="align-items-start">
             <div>
               {prop.images[0] && (
-                <a href={prop.images[0].src} target="_blank" rel="noopener">
+                <a
+                  href={prop.images[0].src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Image
                     src={prop.images[0].src}
                     width={512}
@@ -38,6 +43,15 @@ export default function OneProp() {
             </div>
             <PropCard prop={prop} />
           </HStack>
+          <div className="my-3">
+            <a
+              href={prop.url}
+              className="d-inline-block text-muted text-truncate"
+              style={{ fontSize: "11pt", maxWidth: "100%" }}
+            >
+              <RiExternalLinkLine /> {prop.url}
+            </a>
+          </div>
           <PropImages prop={prop} />
           <PropComments prop={prop} />
         </div>

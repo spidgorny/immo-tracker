@@ -7,16 +7,10 @@ export function PropCard({ prop }) {
     <Card className="">
       <Card.Body className="">
         <h6 className="p-0 m-0">{prop.name}</h6>
-        <div className="text-muted fs-4">
-          <a
-            href={prop.url}
-            className="text-muted text-truncate"
-            style={{ fontSize: "10px" }}
-          >
-            {prop.url}
-          </a>
-        </div>
-        <HStack className="justify-content-between font-monospace text-end">
+        <HStack
+          className="mt-3 justify-content-between font-monospace text-end flex-column align-items-end flex-md-row"
+          style={{ fontSize: "10pt" }}
+        >
           <div>Price: {niceMoney(prop.price)}</div>
           <div>
             Area: {prop.area} m<sup>2</sup>
