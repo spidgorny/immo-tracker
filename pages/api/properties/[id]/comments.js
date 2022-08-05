@@ -8,6 +8,9 @@ export default async function handler(req, res) {
   invariant(id, "id");
   const db = await getDB("immo_tracker");
   const tProps = db.getTable("prop_comments");
-  const results = await tProps.select({ id_prop: id });
+  const results = await tProps.select(
+    { id_prop: id },
+    { sort: { created_at: -1 } }
+  );
   res.status(200).json(results);
 }

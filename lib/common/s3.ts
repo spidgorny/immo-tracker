@@ -6,11 +6,11 @@ import invariant from "tiny-invariant";
 import mime from "mime-types";
 
 export function initS3Proxy() {
-  console.log({ http_proxy: process.env.http_proxy });
-  if (process.env.http_proxy) {
+  console.log({ HTTP_PROXY: process.env.HTTP_PROXY });
+  if (process.env.HTTP_PROXY) {
     AWS.config.update({
       httpOptions: {
-        agent: proxy(process.env.http_proxy),
+        agent: proxy(process.env.HTTP_PROXY),
       },
     });
   }
@@ -21,12 +21,7 @@ export async function uploadBufferToS3(
   fileBytes,
   ContentType = null
 ) {
-  if (process.env.HTTP_PROXY) {
-    AWS.config.update({
-      httpOptions: { agent: proxy(process.env.HTTP_PROXY) },
-    });
-  }
-
+  initS3Proxy();
   invariant(process.env.AWS_API_KEY, "fix .env");
 
   const s3 = new AWS.S3({
@@ -35,7 +30,7 @@ export async function uploadBufferToS3(
     region: process.env.REGION,
   });
 
-  console.log(process.env.BUCKET, process.env.HTTP_PROXY);
+  console.log(process.env.BUCKET);
   ContentType = ContentType ?? mime.lookup(fileName);
   const params = {
     Bucket: process.env.BUCKET,
@@ -52,14 +47,9 @@ export async function uploadBufferToS3(
 }
 
 export async function uploadFileToS3(task) {
+  initS3Proxy();
   const { file: fileName } = task;
   invariant(fileName);
-  if (process.env.HTTP_PROXY) {
-    AWS.config.update({
-      httpOptions: { agent: proxy(process.env.HTTP_PROXY) },
-    });
-  }
-
   invariant(process.env.AWS_API_KEY, "fix .env");
 
   const s3 = new AWS.S3({
@@ -87,11 +77,7 @@ export async function uploadFileToS3(task) {
 
 export async function uploadLargeFileToS3(fileName: string) {
   console.log("Uploading", fileName);
-  if (process.env.HTTP_PROXY) {
-    AWS.config.update({
-      httpOptions: { agent: proxy(process.env.HTTP_PROXY) },
-    });
-  }
+  initS3Proxy();
 
   invariant(process.env.AWS_API_KEY, "fix .env");
   invariant(process.env.REGION, "fix .env");

@@ -1,4 +1,5 @@
 import ImageGallery from "react-image-gallery";
+import { useEffect, useState } from "react";
 
 const images = [
   {
@@ -16,5 +17,11 @@ const images = [
 ];
 
 export default function Gallery() {
-  return <ImageGallery items={images} />;
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShow(true), 3000);
+  }, []);
+
+  return <div>{show && <ImageGallery items={images} />}</div>;
 }
