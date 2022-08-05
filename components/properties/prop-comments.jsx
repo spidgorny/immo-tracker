@@ -1,10 +1,13 @@
 import useSWR from "swr";
 import { fetcher } from "../../lib/common/http";
-import { Badge, Col, Row, Spinner } from "react-bootstrap";
+import { Badge, Button, Col, Row, Spinner } from "react-bootstrap";
 import { getFormData } from "../../lib/common/form";
 import axios from "axios";
 import { HStack } from "../widgets/hstack";
 import Image from "next/image";
+import { UploadForm } from "./upload-form.jsx";
+import { useWorking } from "../../lib/http/http.js";
+import { SaveButton } from "../widgets/save-button.js";
 
 export function PropComments({ prop }) {
   const { data: comments, mutate: mutateComments } = useSWR(
@@ -92,69 +95,7 @@ export function CommentForm({ prop, mutateComments }) {
         />
       </div>
       <div className="input-group my-3">
-        <button type="submit">Save Comment</button>
-      </div>
-    </form>
-  );
-}
-
-export async function readBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsBinaryString(file);
-
-    reader.onload = function (event) {
-      // Convert file to Base64 string
-      // btoa is built int javascript function for base64 encoding
-      resolve(btoa(event.target.result));
-    };
-  });
-}
-
-export function UploadForm({ prop, mutateComments }) {
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log(formData);
-    let file = formData.get("file");
-    console.log(file);
-    let arrayBuffer = await file.arrayBuffer();
-    // const blob = new Blob([arrayBuffer], { type: file.type });
-    // console.log(blob);
-
-    const base64 = await readBase64(file);
-    console.log(base64);
-
-    const { data } = await axios.post(
-      `/api/properties/${prop.id}/upload-file`,
-      {
-        id_prop: prop.id,
-        file_name: file.name,
-        file_type: file.type,
-        file: base64,
-      }
-    );
-    // console.log(data);
-    await mutateComments();
-  };
-
-  return (
-    <form onSubmit={onSubmit} className="w-100">
-      <div className="input-group my-3">
-        <input name="user" placeholder="User" className="form-control" />
-      </div>
-
-      <div className="input-group my-3">
-        <input
-          type="file"
-          name="file"
-          placeholder="File"
-          className="form-control"
-        />
-      </div>
-
-      <div className="input-group my-3">
-        <button type="submit">Upload</button>
+        <SaveButton type="submit">Save Comment</SaveButton>
       </div>
     </form>
   );
