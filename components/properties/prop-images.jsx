@@ -1,10 +1,9 @@
 import ImageGallery from "react-image-gallery";
 import Image from "next/image.js";
 import { useState } from "react";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { niceMoney } from "../../lib/common/date.mjs";
+
 export function PropImages({ prop }) {
   const propImages = prop.images;
   const [currentImage, setCurrentImage] = useState();

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { HStack } from "../widgets/hstack.tsx";
 import Link from "next/link";
 import Image from "next/image";
+import { Center } from "../widgets/center.js";
 
 export function PropertiesList() {
   const { data, error } = useSWR("/api/properties/list", fetcher);
@@ -14,7 +15,11 @@ export function PropertiesList() {
   return (
     <div className="my-2">
       <ErrorAlert error={error} />
-      {!data && <Spinner animation="border" />}
+      {!data && (
+        <Center className="my-10">
+          <Spinner animation="border" />
+        </Center>
+      )}
       <PropTransformer props={data?.results}>
         {(data) => data?.map((prop) => <OneProp key={prop.id} prop={prop} />)}
       </PropTransformer>

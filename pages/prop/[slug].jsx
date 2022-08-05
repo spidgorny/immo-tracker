@@ -26,12 +26,14 @@ export default function OneProp() {
           <HStack gap={3} className="align-items-start">
             <div>
               {prop.images[0] && (
-                <Image
-                  src={prop.images[0].src}
-                  width={512}
-                  height={512}
-                  alt="Bigger image"
-                />
+                <a href={prop.images[0].src} target="_blank" rel="noopener">
+                  <Image
+                    src={prop.images[0].src}
+                    width={512}
+                    height={512}
+                    alt="Bigger image"
+                  />
+                </a>
               )}
             </div>
             <PropCard prop={prop} />
