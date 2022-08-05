@@ -15,3 +15,22 @@ export function clearForm(form) {
     (x: HTMLFormElement) => (x.value = x.defaultValue)
   );
 }
+
+import { useState } from "react";
+
+export function getFormDataNew(form) {
+  return Object.fromEntries(new FormData(form).entries());
+}
+
+export function useFormState(defaultSet = {}) {
+  const [state, setState] = useState(defaultSet);
+
+  const setField = (key, val) => {
+    setState({
+      ...state,
+      [key]: val,
+    });
+  };
+
+  return { formData: state, setField };
+}

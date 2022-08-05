@@ -6,7 +6,6 @@ import axios from "axios";
 import { HStack } from "../widgets/hstack";
 import Image from "next/image";
 import { UploadForm } from "./upload-form.jsx";
-import { useWorking } from "../../lib/http/http.js";
 import { SaveButton } from "../widgets/save-button.js";
 
 export function PropComments({ prop }) {

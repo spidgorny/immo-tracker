@@ -7,6 +7,7 @@ export async function loadEnv() {
   let envPath = await findUp(".env");
   // console.log((chalk.cyan("Env Path => ")), envPath);
   dotenv.config({ path: envPath });
+  process.env.HTTP_PROXY = "";
   console.log("HTTP_PROXY", process.env.HTTP_PROXY);
   // if (!process.env.MYSQL_HOST) {
   // 	throw new Error(".env not loaded");

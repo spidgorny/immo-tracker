@@ -4,7 +4,8 @@ create table immo_tracker.props
 (
     id           int auto_increment
         primary key,
-    name         varchar(255) not null,
+    user         varchar(255) null,
+    name         varchar(255) null,
     created_at   timestamp    null,
     updated_at   timestamp    null,
     url          varchar(255) null,
@@ -13,6 +14,7 @@ create table immo_tracker.props
     rooms        int          null,
     bathrooms    int          null,
     price        int          null,
+    deleted     tinyint not null default 0,
     constraint props_url_uindex
         unique (url)
 );

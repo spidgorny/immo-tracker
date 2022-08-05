@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useWorking } from "../../lib/http/http.js";
+import { useWorking } from "../../lib/http/http";
 import { Button } from "react-bootstrap";
 import { SaveButton } from "../widgets/save-button.js";
 
