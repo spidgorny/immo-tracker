@@ -1,16 +1,25 @@
 import { fetcher } from "../../lib/common/http.ts";
 import useSWR from "swr";
 import { ErrorAlert } from "../widgets/error-alert.tsx";
-import { Card, Spinner } from "react-bootstrap";
+import { Badge, Card, Spinner } from "react-bootstrap";
 import { niceMoney } from "../../lib/common/number.ts";
 import { useEffect, useState } from "react";
 import { HStack } from "../widgets/hstack.tsx";
 import Link from "next/link";
 import Image from "next/image";
 import { Center } from "../widgets/center.js";
+import { useRouter } from "next/router.js";
+import { build_url } from "../../lib/http/fetch-with-catch.mjs";
 
 export function PropertiesList() {
-  const { data, error } = useSWR("/api/properties/list", fetcher);
+  const router = useRouter();
+  const search = router.query.search;
+  const { data, error } = useSWR(
+    build_url("/api/properties/list", {
+      search,
+    }),
+    fetcher
+  );
 
   return (
     <div className="my-2">
@@ -81,7 +90,7 @@ export function OneProp({ prop }) {
         <Card.Body className="">
           <HStack gap={3} className="align-items-start">
             <div className="flex-shrink-0" style={{ width: 64 }}>
-              {prop.images[0]?.src && (
+              {prop.images?.[0]?.src && (
                 <Image
                   src={prop.images[0].src}
                   width={64}
@@ -103,20 +112,27 @@ export function OneProp({ prop }) {
               {/*  {prop.url}*/}
               {/*</a>*/}
               {/*</div>*/}
-              <HStack
-                className="justify-content-between font-monospace"
-                style={{ fontSize: "10pt" }}
-              >
-                <div>{niceMoney(prop.price)}</div>
-                <div>
-                  {prop.area} m<sup>2</sup>
-                </div>
-                <div>
-                  {(prop.price / prop.area).toFixed(2)} / m<sup>2</sup>
-                </div>
-              </HStack>
             </div>
           </HStack>
+          <HStack
+            className="justify-content-between font-monospace"
+            style={{ fontSize: "10pt" }}
+          >
+            <div>{niceMoney(prop.price)}</div>
+            <div>
+              {prop.area} m<sup>2</sup>
+            </div>
+            <div>
+              {(prop.price / prop.area).toFixed(2)} / m<sup>2</sup>
+            </div>
+          </HStack>
+          <div>
+            {prop.tagNames?.map((x) => (
+              <Badge key={x} className="mx-1">
+                {x}
+              </Badge>
+            ))}
+          </div>
         </Card.Body>
       </Card>
     </div>

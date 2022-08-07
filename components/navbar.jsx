@@ -10,10 +10,30 @@ import {
 import { RiFileAddLine, RiListCheck2 } from "react-icons/ri";
 import useSWR from "swr";
 import { fetcher } from "../lib/common/http";
+import { getFormData } from "../lib/common/form";
+import { useRouter } from "next/router.js";
+import { buildURL } from "../lib/http/http.js";
 
 export function NavbarForImmo() {
   const expand = "md";
+  const router = useRouter();
+  const search = router.query.search ?? "";
+
+  const onSearch = async (e) => {
+    e.preventDefault();
+    const formData = getFormData(e.target);
+    if (!formData.s) {
+      return;
+    }
+    await router.push(
+      buildURL(`/`, {
+        search: formData.s,
+      })
+    );
+  };
+
   const { data, error } = useSWR("/api/properties/list", fetcher);
+
   return (
     <Navbar key={expand} bg="light" expand={expand} className="mb-3">
       <Container fluid>
@@ -40,12 +60,14 @@ export function NavbarForImmo() {
                 <RiFileAddLine /> Add Property
               </Nav.Link>
             </Nav>
-            <Form className="d-flex">
+            <Form className="d-flex" onSubmit={onSearch}>
               <Form.Control
+                name="s"
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
+                defaultValue={search}
               />
               <Button variant="outline-success">Search</Button>
             </Form>
