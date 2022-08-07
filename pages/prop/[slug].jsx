@@ -9,6 +9,7 @@ import Image from "next/image.js";
 import { HStack } from "../../components/widgets/hstack.tsx";
 import { Center } from "../../components/widgets/center.js";
 import { RiExternalLinkLine } from "react-icons/ri";
+import { PropTags } from "../../components/properties/prop-tags.jsx";
 
 export default function OneProp() {
   const router = useRouter();
@@ -25,24 +26,13 @@ export default function OneProp() {
       {prop && (
         <div>
           <HStack gap={3} className="align-items-start">
+            <PropLargeImage prop={prop} />
             <div>
-              {prop.images[0] && (
-                <a
-                  href={prop.images[0].src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src={prop.images[0].src}
-                    width={512}
-                    height={512}
-                    alt="Bigger image"
-                  />
-                </a>
-              )}
+              <PropCard prop={prop} />
+              <PropTags prop={prop} className="my-3" />
             </div>
-            <PropCard prop={prop} />
           </HStack>
+
           <div className="my-3">
             <a
               href={prop.url}
@@ -59,6 +49,23 @@ export default function OneProp() {
 
       <hr />
       <pre>{JSON.stringify(prop, null, 2)}</pre>
+    </div>
+  );
+}
+
+export function PropLargeImage({ prop }) {
+  return (
+    <div>
+      {prop.images[0] && (
+        <a href={prop.images[0].src} target="_blank" rel="noopener noreferrer">
+          <Image
+            src={prop.images[0].src}
+            width={512}
+            height={512}
+            alt="Bigger image"
+          />
+        </a>
+      )}
     </div>
   );
 }

@@ -1,12 +1,11 @@
 import { runTest } from "../bootstrap";
-import axios from "axios";
 import { getDB } from "../../lib/mysql/mysql";
 import fs from "fs";
 
 runTest(async () => {
   // const dumpUrl = "https://immo-tracker.vercel.app/api/dump";
   // const { data } = await axios.get(dumpUrl);
-  let json = fs.readFileSync("../../data/dump.json", "utf8");
+  let json = fs.readFileSync("data/dump.json", "utf8");
   let data = JSON.parse(json) as any[];
   const db = await getDB("immo_tracker");
 

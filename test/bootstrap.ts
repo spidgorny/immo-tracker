@@ -17,6 +17,8 @@ export async function loadEnv() {
 export async function runTest(code) {
   try {
     console.warn("RUN TEST", code.name);
+    console.warn("Node", process.version);
+    console.warn("cwd", process.cwd());
     await loadEnv();
     await code();
     console.log("Done in", process.uptime());
