@@ -1,4 +1,4 @@
-import { useWorking } from "../../lib/http/http~";
+import { useWorking } from "../../lib/http/http";
 import { SaveButton } from "../../components/widgets/save-button.js";
 import { getFormData } from "../../lib/common/form";
 import axios from "axios";
